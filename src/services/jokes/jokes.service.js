@@ -41,5 +41,21 @@ class JokesService {
             return Promise.reject(error);
         }
     }
+
+    async getJokes(category) {
+        const url = `https://api.chucknorris.io/jokes/random?category=${category}`;
+        try {
+            const data = await this.ajaxInstance.get(url);
+            if(data.result) {
+                ACTION_JOKES.JOKES_FETCHED.data = data.result;
+            } else {
+                ACTION_JOKES.JOKES_FETCHED.data = [data.value];
+            }console.log(ACTION_JOKES.JOKES_FETCHED.data)
+            STORE_JOKES.dispatch(ACTION_JOKES.JOKES_FETCHED);
+            return Promise.resolve(data);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export default JokesService;

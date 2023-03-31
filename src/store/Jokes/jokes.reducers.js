@@ -16,13 +16,22 @@ function REDUCER_JOKES(state = initialState, action) {
                 ...state,
                 jokeCategories: []
             }
-            break;
         case ACTION_JOKES.JOKES_CATEGORIES_FETCHED.type:
             return {
                 ...state,
                 jokeCategories:action.data
             }
-            break;
+        case ACTION_JOKES.FETCH_JOKES.type:
+            jokesServiceInstance.getJokes(ACTION_JOKES.FETCH_JOKES.category);
+            return {
+                ...state,
+                jokes: []
+            }
+        case ACTION_JOKES.JOKES_FETCHED.type:
+            return {
+                ...state,
+                jokes: action.data
+            }
         default:
             return state;
     }
